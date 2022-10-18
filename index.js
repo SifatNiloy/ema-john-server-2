@@ -41,6 +41,16 @@ async function run() {
             res.send({ count });
 
         })
+
+        //use post to get products by ids
+        app.post('/productByKeys', async (req, res) => {
+            const keys = req.body;
+            const query = { _id: { $in: keys } }
+            const cursor = productCollection.find(query);
+            const products = await cursor.toArray();
+            console.log(keys);
+            res.send(products);
+        })
     }
     finally {
 
